@@ -28,7 +28,7 @@ public class StorageInfoWorker implements Runnable {
         Optional<StorageEntity> storageEntityOptional = storageTemplate.getRepositorySummary(storageUrl);
         if (storageEntityOptional.isPresent()) {
             RepositorySummary [] repositorySummaries = storageEntityOptional.get().getRepositorySummaries();
-            KafkaMessage kafkaMessage = new KafkaMessage(System.currentTimeMillis(),repositorySummaries[repositorySummaries.length-1].getUsedSpace());
+            KafkaMessage kafkaMessage = new KafkaMessage(System.currentTimeMillis(),Long.parseLong(repositorySummaries[repositorySummaries.length-1].getUsedSpace()));
             ProducerRecord producerRecord = createMessage(kafkaMessage, this.topic);
             this.kafkaSummaryProducer.SendMessage(producerRecord);
         }

@@ -10,9 +10,9 @@ public class KafkaMessage implements Serializable {
     private Long timeStamp;
 
     @JsonProperty("usedSpace")
-    private String usedStorage;
+    private Long usedStorage;
 
-    public KafkaMessage(Long timeStamp, String usedStorage) {
+    public KafkaMessage(Long timeStamp, Long usedStorage) {
         this.timeStamp = timeStamp;
         this.usedStorage = usedStorage;
     }
