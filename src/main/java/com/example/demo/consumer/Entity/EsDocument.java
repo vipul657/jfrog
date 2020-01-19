@@ -8,7 +8,7 @@ public class EsDocument {
     private Long timeStamp;
 
     @JsonProperty("usedSpace")
-    private String usedStorage;
+    private Long usedStorage;
 
     public Long getTimeStamp() {
         return timeStamp;
@@ -18,11 +18,11 @@ public class EsDocument {
         this.timeStamp = timeStamp;
     }
 
-    public String getUsedStorage() {
+    public Long getUsedStorage() {
         return usedStorage;
     }
 
-    public void setUsedStorage(String usedStorage) {
+    public void setUsedStorage(long usedStorage) {
         this.usedStorage = usedStorage;
     }
 }
