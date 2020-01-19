@@ -14,16 +14,16 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class StorageService {
 
-    @Value("${spring.artifactory.url}")
+    @Value("${artifactory.url}")
     private String url;
 
-    @Value("${spring.artifactory.host}")
+    @Value("${artifactory.host}")
     private String host;
 
-    @Value("${spring.artifactory.port}")
+    @Value("${artifactory.port}")
     private String port;
 
-    @Value("${spring.kafka.topic}")
+    @Value("${kafka.topic}")
     private String topic;
 
     @Autowired

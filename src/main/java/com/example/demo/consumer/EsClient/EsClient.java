@@ -14,10 +14,10 @@ import java.util.Map;
 @Component
 public class EsClient {
 
-    @Value("${spring.es.node.host}")
+    @Value("${es.node.host}")
     private String esNodeHost;
 
-    @Value(("${spring.es.node.port}"))
+    @Value(("${es.node.port}"))
 
 
     private Integer esNodePort;
