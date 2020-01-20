@@ -18,16 +18,15 @@ public class EsClient {
     private String esNodeHost;
 
     @Value(("${es.node.port}"))
-
-
     private Integer esNodePort;
+
     private RestHighLevelClient restHighLevelClient;
 
-    public EsClient(){
-        restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost(esNodeHost,esNodePort,"http")));
+    public EsClient() {
+        restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost(esNodeHost, esNodePort, "http")));
     }
 
-    public void indexDocumentMap(Map<String,Object> jsonMap,String index ) throws IOException {
+    public void indexDocumentMap(Map<String, Object> jsonMap, String index) throws IOException {
         IndexRequest indexRequest = new IndexRequest(index, "doc")
                 .source(jsonMap);
         restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);

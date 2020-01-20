@@ -34,6 +34,9 @@ public class StorageService {
 
     private ScheduledExecutorService scheduledExecutorService;
 
+    /**
+     * Service that polls the storage appi at fixed intervals for storage metrics
+     * */
     StorageService(){
         scheduledExecutorService = Executors.newScheduledThreadPool(1);
         String storageUrl = host+":"+port+url;

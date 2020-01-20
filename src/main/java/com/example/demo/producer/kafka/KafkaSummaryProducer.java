@@ -14,7 +14,6 @@ public class KafkaSummaryProducer {
         this.producer = new KafkaProducer(properties);
     }
 
-
     public void SendMessage(ProducerRecord producerRecord) {
         this.producer.send(producerRecord);
         this.producer.commitTransaction();

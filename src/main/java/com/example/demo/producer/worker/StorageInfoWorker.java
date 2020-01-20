@@ -6,11 +6,14 @@ import com.example.demo.producer.entity.RepositorySummary;
 import com.example.demo.producer.entity.StorageEntity;
 import com.example.demo.producer.kafka.KafkaSummaryProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
 public class StorageInfoWorker implements Runnable {
 
+    private static Logger logger = LoggerFactory.getLogger(StorageInfoWorker.class);
     private StorageTemplate storageTemplate;
     private KafkaSummaryProducer kafkaSummaryProducer;
     private String storageUrl;
@@ -30,6 +33,7 @@ public class StorageInfoWorker implements Runnable {
             RepositorySummary [] repositorySummaries = storageEntityOptional.get().getRepositorySummaries();
             KafkaMessage kafkaMessage = new KafkaMessage(System.currentTimeMillis(),Long.parseLong(repositorySummaries[repositorySummaries.length-1].getUsedSpace()));
             ProducerRecord producerRecord = createMessage(kafkaMessage, this.topic);
+            logger.info("Sending data to kafka topic :"+topic);
             this.kafkaSummaryProducer.SendMessage(producerRecord);
         }
     }

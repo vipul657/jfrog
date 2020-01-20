@@ -5,10 +5,9 @@ import org.apache.kafka.clients.consumer.CommitFailedException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.KafkaException;
-import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.RebalanceInProgressException;
-import org.springframework.util.backoff.ExponentialBackOff;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -17,10 +16,14 @@ import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
+/**
+ * Wrapper class for kafka consumer providing abilities to read exactly once.
+ */
 public class MessageConsumer implements Runnable {
 
     private KafkaConsumer kafkaConsumer;
-
+    private static Logger logger = LoggerFactory.getLogger(MessageConsumer.class);
     private String topic;
     private BlockingQueue<EsDocument> blockingQueue;
     private final AtomicBoolean lock = new AtomicBoolean(false);
@@ -45,17 +48,12 @@ public class MessageConsumer implements Runnable {
                 }
 
             } catch (CommitFailedException | RebalanceInProgressException e) {
+                logger.error("Error occureed while polling, retrying to connecct to kafka brokers");
                 kafkaConsumer.subscribe(Arrays.asList(topic));
             } catch (InterruptedException e) {
+                logger.error("Consumer thread Interrupted");
                 e.printStackTrace();
             }
-        }
-    }
-
-    private void addToqueue(ConsumerRecords consumerRecords, BlockingQueue blockingQueue) {
-        Iterator<ConsumerRecord> iterator = consumerRecords.iterator();
-        while (iterator.hasNext()) {
-            blockingQueue.add(iterator.next().value());
         }
     }
 
@@ -67,8 +65,16 @@ public class MessageConsumer implements Runnable {
         }
     }
 
-    public void pause(){
+    public void pause() {
         lock.set(true);
     }
+
+    private void addToqueue(ConsumerRecords consumerRecords, BlockingQueue blockingQueue) {
+        Iterator<ConsumerRecord> iterator = consumerRecords.iterator();
+        while (iterator.hasNext()) {
+            blockingQueue.add(iterator.next().value());
+        }
+    }
+
 
 }
