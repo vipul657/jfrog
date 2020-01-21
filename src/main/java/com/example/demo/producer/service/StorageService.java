@@ -1,5 +1,6 @@
 package com.example.demo.producer.service;
 
+import com.example.demo.Configuration;
 import com.example.demo.producer.Rest.StorageTemplate;
 import com.example.demo.producer.kafka.KafkaSummaryProducer;
 import com.example.demo.producer.worker.StorageInfoWorker;
@@ -14,17 +15,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class StorageService {
 
-    @Value("${artifactory.url}")
-    private String url;
-
-    @Value("${artifactory.host}")
-    private String host;
-
-    @Value("${artifactory.port}")
-    private String port;
-
-    @Value("${kafka.topic}")
-    private String topic;
+    @Autowired
+    Configuration configuration;
 
     @Autowired
     private StorageTemplate storageTemplate;
@@ -34,13 +26,11 @@ public class StorageService {
 
     private ScheduledExecutorService scheduledExecutorService;
 
-    /**
-     * Service that polls the storage appi at fixed intervals for storage metrics
-     * */
-    StorageService(){
+    public void startStorage(){
+        System.out.println("Storage service");
         scheduledExecutorService = Executors.newScheduledThreadPool(1);
-        String storageUrl = host+":"+port+url;
-        scheduledExecutorService.scheduleAtFixedRate(new StorageInfoWorker(this.topic,storageUrl,this.storageTemplate,this.kafkaSummaryProducer),0,1, TimeUnit.HOURS);
+        String storageUrl = configuration.getArtifactoryHost()+":"+configuration.getArtifactoryPort()+configuration.getArtifactoryUrl();
+        scheduledExecutorService.scheduleAtFixedRate(new StorageInfoWorker(configuration.getKafkaTopic(),storageUrl,this.storageTemplate,this.kafkaSummaryProducer),0,1, TimeUnit.HOURS);
     }
 
 }

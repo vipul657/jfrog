@@ -1,24 +1,28 @@
 package com.example.demo.producer.Rest;
 
+import com.example.demo.Configuration;
 import com.example.demo.producer.entity.StorageEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class StorageTemplate {
+
+   @Autowired
+    Configuration configuration;
 
     private RestTemplate restTemplate = new RestTemplate();
 
     public Optional<StorageEntity> getRepositorySummary(String url) {
-        ResponseEntity<StorageEntity> responseEntity = restTemplate.getForEntity(url, StorageEntity.class);
-        if (responseEntity.getStatusCodeValue() == 200) {
-            return Optional.ofNullable(responseEntity.getBody());
-        } else {
-            return Optional.empty();
-        }
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("X-JFrog-Art-API", configuration.getApiKey());
+        StorageEntity responseEntity = restTemplate.getForObject(url, StorageEntity.class, httpHeaders);
+        return Optional.ofNullable(responseEntity);
     }
 
 }

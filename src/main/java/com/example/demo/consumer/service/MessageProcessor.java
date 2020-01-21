@@ -1,12 +1,12 @@
 package com.example.demo.consumer.service;
 
+import com.example.demo.Configuration;
 import com.example.demo.consumer.Entity.EsDocument;
 import com.example.demo.consumer.EsClient.EsClient;
 import com.example.demo.consumer.KafkaMessageConsumer.MessageConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -28,17 +28,8 @@ public class MessageProcessor {
      * */
     private BlockingQueue<EsDocument> blockingQueue;
 
-    @Value("${kafka.topic}")
-    private String topic;
-
-    @Value("${kafka.commit.interval}")
-    private Long commitInterval;
-
-    @Value("${es.index.name}")
-    private String esIndex;
-
-    @Value("${kafka.blocking.queue.size}")
-    private Integer size;
+    @Autowired
+    Configuration configuration;
 
     @Autowired
     EsClient esClient;
@@ -48,19 +39,20 @@ public class MessageProcessor {
     private ExecutorService executorService;
     private static Logger logger = LoggerFactory.getLogger(MessageProcessor.class);
 
-    public MessageProcessor(Properties properties, String topic) {
-        this.messageConsumer = new MessageConsumer(properties, topic, blockingQueue);
+    public MessageProcessor() {
+        String topic = configuration.getKafkaTopic();
+        this.messageConsumer = new MessageConsumer(topic, blockingQueue);
         this.executorService = Executors.newFixedThreadPool(1);
         this.esDocumentList = new ArrayList<>();
         startConsumingFromKafkaAndPushToEs();
-        this.blockingQueue = new ArrayBlockingQueue<>(size);
+        this.blockingQueue = new ArrayBlockingQueue<>(100);
     }
 
     private void startConsumingFromKafkaAndPushToEs() {
         this.executorService.submit(this.messageConsumer);
         Long t1 = Long.valueOf(0);
         while (true) {
-            if (this.blockingQueue.size() == size || isTimeElapsed(t1)) {
+            if (this.blockingQueue.size() == 100 || isTimeElapsed(t1)) {
                 logger.info("Commit invoked");
                 messageConsumer.pause();
                 blockingQueue.drainTo(esDocumentList);
@@ -87,7 +79,7 @@ public class MessageProcessor {
                 esMap.put("storageUsed", esDocument.getUsedStorage());
                 esMap.put("timeStamp", esDocument.getTimeStamp());
                 try {
-                    esClient.indexDocumentMap(esMap, this.esIndex);
+                    esClient.indexDocumentMap(esMap, configuration.getEsIndexName());
                     logger.info("pushing to elastic search");
                 } catch (IOException e) {
                     logger.error("Error while processing data to elastic search");
@@ -98,7 +90,7 @@ public class MessageProcessor {
     }
 
     private boolean isTimeElapsed(long t1) {
-        if (System.currentTimeMillis() - t1 >= commitInterval) {
+        if (System.currentTimeMillis() - t1 >= configuration.getKafkaCommitInterval()) {
             return true;
         }
         return false;

@@ -28,8 +28,15 @@ public class MessageConsumer implements Runnable {
     private BlockingQueue<EsDocument> blockingQueue;
     private final AtomicBoolean lock = new AtomicBoolean(false);
 
-    public MessageConsumer(Properties properties, String topic, BlockingQueue<EsDocument> blockingQueue) {
-        kafkaConsumer = new KafkaConsumer(properties);
+    public MessageConsumer(String topic, BlockingQueue<EsDocument> blockingQueue) {
+        Properties props = new Properties();
+        props.setProperty("bootstrap.servers", "localhost:9092");
+        props.setProperty("group.id", "test");
+        props.setProperty("enable.auto.commit", "true");
+        props.setProperty("auto.commit.interval.ms", "1000");
+        props.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.setProperty("value.deserializer", "com.example.demo.consumer.KafkaMessageConsumer.KafkaJsonDeserializer");
+        kafkaConsumer = new KafkaConsumer(props);
         kafkaConsumer.subscribe(Arrays.asList(topic));
         this.blockingQueue = blockingQueue;
     }
