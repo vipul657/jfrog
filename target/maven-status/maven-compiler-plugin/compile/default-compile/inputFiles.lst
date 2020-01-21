@@ -1,0 +1,15 @@
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/producer/worker/StorageInfoWorker.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/consumer/KafkaMessageConsumer/MessageConsumer.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/DemoApplication.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/producer/service/StorageService.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/consumer/service/MessageProcessor.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/producer/Rest/StorageTemplate.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/consumer/KafkaMessageConsumer/KafkaJsonDeserializer.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/producer/kafka/KafkaJsonSerializer.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/producer/entity/KafkaMessage.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/consumer/Entity/EsDocument.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/producer/entity/StorageEntity.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/producer/kafka/KafkaSummaryProducer.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/consumer/EsClient/EsClient.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/Configuration.java
+/home/vipul/Documents/jfrog/src/main/java/com/example/demo/producer/entity/RepositorySummary.java

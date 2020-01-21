@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: com.example.demo.DemoApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.294 s <<< FAILURE! - in com.example.demo.DemoApplicationTests
+contextLoads  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'demoApplication': Unsatisfied dependency expressed through field 'messageProcessor'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageProcessor' defined in file [/home/vipul/Documents/jfrog/target/classes/com/example/demo/consumer/service/MessageProcessor.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.example.demo.consumer.service.MessageProcessor]: Constructor threw exception; nested exception is java.lang.NullPointerException
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'messageProcessor' defined in file [/home/vipul/Documents/jfrog/target/classes/com/example/demo/consumer/service/MessageProcessor.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.example.demo.consumer.service.MessageProcessor]: Constructor threw exception; nested exception is java.lang.NullPointerException
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.example.demo.consumer.service.MessageProcessor]: Constructor threw exception; nested exception is java.lang.NullPointerException
+Caused by: java.lang.NullPointerException
+

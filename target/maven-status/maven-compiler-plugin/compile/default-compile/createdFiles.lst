@@ -1,0 +1,15 @@
+com/example/demo/producer/service/StorageService.class
+com/example/demo/producer/kafka/KafkaJsonSerializer.class
+com/example/demo/consumer/EsClient/EsClient.class
+com/example/demo/producer/worker/StorageInfoWorker.class
+com/example/demo/producer/Rest/StorageTemplate.class
+com/example/demo/consumer/KafkaMessageConsumer/KafkaJsonDeserializer.class
+com/example/demo/DemoApplication.class
+com/example/demo/producer/kafka/KafkaSummaryProducer.class
+com/example/demo/producer/entity/StorageEntity.class
+com/example/demo/producer/entity/KafkaMessage.class
+com/example/demo/Configuration.class
+com/example/demo/consumer/KafkaMessageConsumer/MessageConsumer.class
+com/example/demo/consumer/Entity/EsDocument.class
+com/example/demo/consumer/service/MessageProcessor.class
+com/example/demo/producer/entity/RepositorySummary.class

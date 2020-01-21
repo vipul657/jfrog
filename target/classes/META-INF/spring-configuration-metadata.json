@@ -1,0 +1,57 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "",
+      "type": "com.example.jfrog.configuration.Configuration"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "api-key",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "artifactory-host",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "artifactory-port",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "artifactory-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "es-index-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "es-node-host",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "es-node-port",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "kafka-commit-interval",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "com.example.jfrog.configuration.Configuration",
+      "name": "kafka-topic",
+      "type": "java.lang.String"
+    }
+  ]
+}
